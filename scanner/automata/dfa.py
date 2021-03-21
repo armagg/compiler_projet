@@ -64,6 +64,11 @@ class DFA:
             return list(string.digits)
         if chars == '@letter':
             return list(string.ascii_letters)
+        if chars == '@ascii':
+            return [chr(i) for i in range(128)]
+        if chars == '@valid':
+            return list(string.ascii_letters + string.digits + '()[]{}+-*<;:,/'
+                + ' \n\r\f\v\t')
         if chars == '@default':
             return [chr(i) for i in range(128)] + ['']
         return list(chars)

@@ -49,9 +49,10 @@ class Scanner:
 
                 token = (token_type, self.get_pending_str())
                 if token_type == TokenType.IDKEYWORD:
-                    token[0], _ = self.symbol_table.add_symbol(
+                    tmp = self.symbol_table.add_symbol(
                         self.get_pending_str(),
                     )
+                    token = tmp[0], token[1]
 
                 self.token_storage.add_token(self.line_no, token)
                 return token
@@ -59,7 +60,7 @@ class Scanner:
                 self.handle_panic_mode(e.msg)
                 return self.get_next_token()
             except UnclosedCommentException as e:
-                current_str = self.get_pending_str(),
+                current_str = self.get_pending_str()
                 if len(current_str) > 7:
                     current_str = current_str[:7] + '...'
                 self.error_storage.add_error(
@@ -88,8 +89,8 @@ class Scanner:
             self.pending_str.append(char)
         self.error_storage.add_error(
             self.line_no,
-            msg,
             self.get_pending_str(),
+            msg,
         )
 
     def get_pending_str(self):
