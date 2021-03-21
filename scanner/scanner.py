@@ -5,27 +5,31 @@ from .automata.dfa import DFA
 from .storages import TokenStorage, ErrorStorage, SymbolTableStorage
 from .buffer import UnreadableBuffer
 from .token_type import TokenType
-import config
 
 class Scanner:
-    def __init__(self):
+    def __init__(self, input_file, tokens_file, errors_file,
+            symbols_file, dfa_file, keywords_file):
+        self.tokens_file = tokens_file
+        self.errors_file = errors_file
+        self.symbols_file = symbols_file
+
         self.token_storage = TokenStorage()
 
         self.error_storage = ErrorStorage()
 
         self.symbol_table = SymbolTableStorage()
-        self.symbol_table.load_keywords(config.KEYWORDS_FILE)
+        self.symbol_table.load_keywords(keywords_file)
 
-        self.buffer = UnreadableBuffer(config.INPUT_FILE)
+        self.buffer = UnreadableBuffer(input_file)
         self.pending_str = []
 
-        self.dfa = DFA.from_json_file(config.DFA_JSON_FILE)
+        self.dfa = DFA.from_json_file(dfa_file)
         self.line_no = 1
 
     def dump_data(self):
-        self.symbol_table.dump(config.SYMBOL_TABLE_FILE)
-        self.error_storage.dump(config.LEXICAL_ERRORS_FILE)
-        self.token_storage.dump(config.TOKENS_FILE)
+        self.symbol_table.dump(self.symbols_file)
+        self.error_storage.dump(self.errors_file)
+        self.token_storage.dump(self.tokens_file)
 
     def get_next_token(self):
         self.dfa.reset()
@@ -34,8 +38,7 @@ class Scanner:
         self.line_no = self.buffer.line_no
         while True:
             char = self.buffer.get()
-            if char == '' and first_turn:
-                self.dump_data()
+            if first_turn and char == '':
                 return None
             self.pending_str += char
 
@@ -57,7 +60,13 @@ class Scanner:
                 self.token_storage.add_token(self.line_no, token)
                 return token
             except InvalidInputException as e:
-                self.handle_panic_mode(e.msg)
+                if e.state and e.state.unread:
+                    self.buffer.unread(self.pending_str.pop())
+                self.error_storage.add_error(
+                    self.line_no,
+                    self.get_pending_str(),
+                    e.msg,
+                )
                 return self.get_next_token()
             except UnclosedCommentException as e:
                 current_str = self.get_pending_str()
@@ -87,11 +96,6 @@ class Scanner:
                 self.buffer.unread(char)
                 break
             self.pending_str.append(char)
-        self.error_storage.add_error(
-            self.line_no,
-            self.get_pending_str(),
-            msg,
-        )
 
     def get_pending_str(self):
         return ''.join(self.pending_str)

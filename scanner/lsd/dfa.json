@@ -15,7 +15,8 @@
         "id": 1,
         "transitions": [
             ["/", 2],
-            ["*", 4]
+            ["*", 4],
+            ["@default", 503]
         ]
     },
     {
@@ -143,5 +144,10 @@
         "id": 502,
         "exception": "UNCLOSED",
         "unread": false
+    },
+    {
+        "id": 503,
+        "exception": "INVALID_INPUT",
+        "unread": true
     }
 ]

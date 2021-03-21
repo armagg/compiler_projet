@@ -43,6 +43,9 @@ class ErrorStorage(BaseStorage):
 
     def dump(self, file_name):
         with open(file_name, 'w') as f:
+            if len(self.errors) == 0:
+                f.write('There is no lexical error.')
+                return
             for line in sorted(self.errors.keys()):
                 rendered_errors = list(map(
                     lambda error: f'({error[0]}, {error[1]})',
@@ -80,5 +83,5 @@ class SymbolTableStorage(BaseStorage):
     def dump(self, file_name):
         with open(file_name, 'w') as f:
             for idx, symbol in enumerate(self.symbols):
-                f.write(f'{idx + 1}\t{symbol}\n')
+                f.write(f'{idx + 1}.\t{symbol}\n')
 
