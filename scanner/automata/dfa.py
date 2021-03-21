@@ -1,8 +1,13 @@
+import json
+import string
+
 from .exceptions import get_exception_by_name
+from .state import State
+
 
 class DFA:
     def __init__(self):
-        self.states = map()
+        self.states = dict()
         self.start_state = None
         self.current_state = None
 
@@ -12,7 +17,7 @@ class DFA:
     def scan(self, char):
         new_state = self.current_state.transit(char)
         if new_state is None:
-            raise InvalidInputException()
+            raise get_exception_by_name('INVALID_INPUT')()
         new_state.raise_exception()
         self.current_state = new_state
 
@@ -25,16 +30,18 @@ class DFA:
             exception = state_data.get('exception', None)
             if exception:
                 exception_class = get_exception_by_name(exception)
+            else:
+                exception_class = None
 
             dfa.states[state_data['id']] = State(
                 unread=state_data.get('unread', False),
                 token_type=state_data.get('type'),
-                exception_class=exception_class
+                exception_class=exception_class,
             )
 
         for state_data in data:
             source = dfa.states.get(state_data['id'])
-            for transition in state_data['transitions']:
+            for transition in state_data.get('transitions', []):
                 chars = DFA.parse_transition_chars(transition[0])
                 dest = dfa.states.get(transition[1])
                 source.add_transition(chars, dest)

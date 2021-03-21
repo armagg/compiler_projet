@@ -1,32 +1,32 @@
 class ReachedAcceptException(Exception):
-    def __init__(self, state):
+    def __init__(self, state=None):
         super()
         self.state = state
 
 
 class InvalidInputException(Exception):
-    def __init__(self, state):
+    def __init__(self, state=None):
         super()
         self.msg = 'Invalid input'
         self.state = state
 
 
 class InvalidNumberException(Exception):
-    def __init__(self, state):
+    def __init__(self, state=None):
         super()
         self.msg = 'Invalid number'
         self.state = state
 
 
 class UnmatchedCommentException(Exception):
-    def __init__(self, state):
+    def __init__(self, state=None):
         super()
         self.msg = 'Unmatched comment'
         self.state = state
 
 
 class UnclosedCommentException(Exception):
-    def __init__(self, state):
+    def __init__(self, state=None):
         super()
         self.msg = 'Unclosed comment'
         self.state = state

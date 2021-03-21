@@ -1,6 +1,6 @@
 class State:
     def __init__(self, unread, token_type, exception_class):
-        self.tarnsitions = list()
+        self.transitions = list()
         self.unread = unread
         self.token_type = token_type
         self.exception_class = exception_class

@@ -1,0 +1,147 @@
+[
+    {
+        "id": 0,
+        "transitions": [
+            ["/", 1],
+            [[32, 9, 10, 11, 12, 13], 7],
+            ["=", 8],
+            [";:,[]{}()", 11],
+            ["*", 12],
+            ["@digit", 14],
+            ["@letter", 16]
+        ]
+    },
+    {
+        "id": 1,
+        "transitions": [
+            ["/", 2],
+            ["*", 4]
+        ]
+    },
+    {
+        "id": 2,
+        "transitions": [
+            [["", 10], 3],
+            ["@default", 2]
+        ]
+    },
+    {
+        "id": 3,
+        "exception": "ACCEPT",
+        "unread": true,
+        "type": "COMMENT"
+    },
+    {
+        "id": 4,
+        "transitions": [
+            ["*", 5],
+            ["", 502],
+            ["@default", 4]
+        ]
+    },
+    {
+        "id": 5,
+        "transitions": [
+            ["/", 6],
+            ["*", 5],
+            ["", 502],
+            ["@default", 4]
+        ]
+    },
+    {
+        "id": 6,
+        "exception": "ACCEPT",
+        "unread": false,
+        "type": "COMMENT"
+    },
+    {
+        "id": 7,
+        "exception": "ACCEPT",
+        "unread": false,
+        "type": "WHITESPACE"
+    },
+    {
+        "id": 8,
+        "transitions": [
+            ["=", 9],
+            ["@default", 10]
+        ]
+    },
+    {
+        "id": 9,
+        "exception": "ACCEPT",
+        "unread": false,
+        "type": "SYMBOL"
+    },
+    {
+        "id": 10,
+        "exception": "ACCEPT",
+        "unread": true,
+        "type": "SYMBOL"
+    },
+    {
+        "id": 11,
+        "exception": "ACCEPT",
+        "unread": false,
+        "type": "SYMBOL"
+    },
+    {
+        "id": 12,
+        "transitions": [
+            ["/", 501],
+            ["@default", 13]
+        ]
+    },
+    {
+        "id": 13,
+        "exception": "ACCEPT",
+        "unread": true,
+        "type": "SYMBOL"
+    },
+    {
+        "id": 14,
+        "transitions": [
+            ["@digit", 14],
+            ["@letter", 500],
+            ["@default", 15]
+        ]
+    },
+    {
+        "id": 15,
+        "exception": "ACCEPT",
+        "unread": true,
+        "type": "NUM"
+    },
+    {
+        "id": 16,
+        "transitions": [
+            ["@letter", 16],
+            ["@digit", 16],
+            ["@default", 17]
+        ]
+    },
+    {
+        "id": 17,
+        "exception": "ACCEPT",
+        "unread": true,
+        "type": "ID/KEYWORD"
+    },
+
+
+
+    {
+        "id": 500,
+        "exception": "INVALID_NUMBER",
+        "unread": false
+    },
+    {
+        "id": 501,
+        "exception": "UNMATCHED",
+        "unread": false
+    },
+    {
+        "id": 502,
+        "exception": "UNCLOSED",
+        "unread": false
+    }
+]
