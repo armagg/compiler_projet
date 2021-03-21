@@ -5,7 +5,7 @@ from .automata.dfa import DFA
 from .storages import TokenStorage, ErrorStorage, SymbolTableStorage
 from .buffer import UnreadableBuffer
 from .token_type import TokenType
-from . import config
+import config
 
 class Scanner:
     def __init__(self):

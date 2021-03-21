@@ -1,4 +1,5 @@
 from .token_type import TokenType
+import config
 
 class BaseStorage:
     def dump(self, file_name):
@@ -6,10 +7,16 @@ class BaseStorage:
 
 
 class TokenStorage(BaseStorage):
-    def __init__(self):
+    def __init__(self, conf=config.DEFAULT_TOKEN_STORAGE_CONFIG):
         self.tokens = dict()
+        self.conf = conf
+
+    def care_about(self, tok_type):
+        return tok_type in self.conf['care_about']
 
     def add_token(self, line_no, token):
+        if not self.care_about(token[0]):
+            return
         if not self.tokens.get(line_no, None):
             self.tokens[line_no] = list()
         self.tokens[line_no].append(token)
