@@ -14,12 +14,15 @@ class DFA:
     def reset(self):
         self.current_state = self.start_state
 
+    def can_scan(self, char):
+        return self.current_state.transit(char) is not None
+
     def scan(self, char):
         new_state = self.current_state.transit(char)
         if new_state is None:
             raise get_exception_by_name('INVALID_INPUT')()
-        new_state.raise_exception()
         self.current_state = new_state
+        new_state.raise_exception()
 
     @staticmethod
     def from_json_file(json_file):

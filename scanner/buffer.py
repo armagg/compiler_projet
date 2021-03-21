@@ -11,8 +11,9 @@ class UnreadableBuffer:
 
     def __init__(self, file_name):
         self.buffer = collections.deque()
-        self.file = open('file_name', 'r')
+        self.file = open(file_name, 'r')
         self.eof = False
+        self.line_no = 1
 
     def __del__(self):
         if self.file:
@@ -21,13 +22,22 @@ class UnreadableBuffer:
     def __fetch(self):
         if self.eof:
             return
-        self.buffer += self.file.read(BLOCK_SIZE)
+        read_str = self.file.read(self.BLOCK_SIZE)
+        if len(read_str) < self.BLOCK_SIZE:
+            self.eof = True
+        self.buffer += read_str
 
-    def get():
+    def get(self):
         if len(self.buffer) == 0:
             self.__fetch()
-        return self.buffer.popleft() if len(self.buffer) else ''
 
-    def unread(char):
+        char = self.buffer.popleft() if len(self.buffer) else ''
+        if char == '\n':
+            self.line_no += 1
+        return char
+
+    def unread(self, char):
         self.buffer.appendleft(char)
+        if char == '\n':
+            self.line_no -= 1
 
