@@ -1,5 +1,17 @@
 #!/bin/bash
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+function success {
+    printf "$*: ${GREEN}OK${NC}\n"
+}
+
+function fail {
+    printf "$*: ${RED}WRONG${NC}\n"
+}
+
 test_dir="$1"
 cp "$test_dir/input.txt" input.txt
 
@@ -8,23 +20,23 @@ python compiler.py
 diff -Bbq lexical_errors.txt "$test_dir/lexical_errors.txt" 2>&1 > /dev/null
 if [ $? -ne 0 ]
 then
-    echo "lexical_errors: WRONG"
+    fail "lexical_errors"
 else
-    echo "lexical_errors: OK"
+    success "lexical_errors"
 fi
 
 diff -Bbq symbol_table.txt "$test_dir/symbol_table.txt" 2>&1 > /dev/null
 if [ $? -ne 0 ]
 then
-    echo "symbol_table: WRONG"
+    fail "symbol_table"
 else
-    echo "symbol_table: OK"
+    success "symbol_table"
 fi
 
 diff -Bbq tokens.txt "$test_dir/tokens.txt" 2>&1 > /dev/null
 if [ $? -ne 0 ]
 then
-    echo "tokens: WRONG"
+    fail "tokens"
 else
-    echo "tokens: OK"
+    success "tokens"
 fi
