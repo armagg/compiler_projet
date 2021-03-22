@@ -12,6 +12,12 @@ function fail {
     printf "$*: ${RED}WRONG${NC}\n"
 }
 
+if [ $# -ne 1 ]
+then
+    echo pass the test directory addrees
+    exit 1
+fi
+
 test_dir="$1"
 cp "$test_dir/input.txt" input.txt
 
