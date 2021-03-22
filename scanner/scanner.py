@@ -87,6 +87,11 @@ class Scanner:
                 return self.get_next_token()
 
     def handle_panic_mode(self, msg):
+        """
+        Unused method!
+        TODO: Fix the panic mode behavior and decide about deleting
+        this method.
+        """
         self.dfa.reset()
         while True:
             char = self.buffer.get()
