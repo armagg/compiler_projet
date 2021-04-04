@@ -1,7 +1,7 @@
 """
 Members:
     Majid Garoosi   96109855
-    Omid Mesgarha   TODO
+    Omid Mesgarha   96110645
 """
 import config
 from scanner.scanner import Scanner
