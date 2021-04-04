@@ -5,6 +5,9 @@ from .exceptions import get_exception_by_name
 from .state import State
 
 
+UTF8_chars = list(map(chr, range(256 * 256)))
+
+
 class DFA:
     def __init__(self):
         self.states = dict()
@@ -66,9 +69,13 @@ class DFA:
             return list(string.ascii_letters)
         if chars == '@ascii':
             return [chr(i) for i in range(128)]
+        if chars == '@utf8':
+            return UTF8_chars
         if chars == '@valid':
             return list(string.ascii_letters + string.digits + '()[]{}+-*<;:,/'
                 + ' \n\r\f\v\t')
+        if chars == '@symbols':
+            return list('()[]{}+-*<;:,/')
         if chars == '@default':
             return [chr(i) for i in range(128)] + ['']
         return list(chars)
