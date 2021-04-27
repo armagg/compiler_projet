@@ -72,7 +72,7 @@ class DFA:
         if chars == '@utf8':
             return UTF8_chars
         if chars == '@valid':
-            return list(string.ascii_letters + string.digits + '()[]{}+-*<;:,/'
+            return list(string.ascii_letters + string.digits + '()[]{}+-*<;:,/='
                 + ' \n\r\f\v\t')
         if chars == '@symbols':
             return list('()[]{}+-*<;:,/')
