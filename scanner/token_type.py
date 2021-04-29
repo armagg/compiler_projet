@@ -6,4 +6,4 @@ class TokenType:
     NUM = 'NUM'
     SYMBOL = 'SYMBOL'
     WHITESPACE = 'WHITESPACE'
-
+    EOF = 'EOF'

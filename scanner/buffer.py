@@ -1,5 +1,6 @@
 import collections
 
+
 class UnreadableBuffer:
     """
     Note that it's not an unreadable buffer; This is a buffer with
@@ -40,4 +41,3 @@ class UnreadableBuffer:
         self.buffer.appendleft(char)
         if char == '\n':
             self.line_no -= 1
-

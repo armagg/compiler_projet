@@ -1,14 +1,14 @@
-from .automata.exceptions import ReachedAcceptException, \
-        InvalidInputException, InvalidNumberException, \
-        UnmatchedCommentException, UnclosedCommentException
 from .automata.dfa import DFA
-from .storages import TokenStorage, ErrorStorage, SymbolTableStorage
+from .automata.exceptions import ReachedAcceptException, \
+    InvalidInputException, UnclosedCommentException
 from .buffer import UnreadableBuffer
+from .storages import TokenStorage, ErrorStorage, SymbolTableStorage
 from .token_type import TokenType
+
 
 class Scanner:
     def __init__(self, input_file, tokens_file, errors_file,
-            symbols_file, dfa_file, keywords_file):
+                 symbols_file, dfa_file, keywords_file):
         self.tokens_file = tokens_file
         self.errors_file = errors_file
         self.symbols_file = symbols_file
@@ -32,6 +32,15 @@ class Scanner:
         self.token_storage.dump(self.tokens_file)
 
     def get_next_token(self):
+        while True:
+            next_token = self._get_next_token()
+            if next_token:
+                if self.token_storage.care_about(next_token[0]):
+                    return next_token
+            else:
+                return next_token
+
+    def _get_next_token(self):
         self.dfa.reset()
         self.pending_str.clear()
         first_turn = True
@@ -39,7 +48,9 @@ class Scanner:
         while True:
             char = self.buffer.get()
             if first_turn and char == '':
-                return None
+                token = (TokenType.EOF, '$')
+                self.token_storage.add_token(self.line_no, token)
+                return token
             self.pending_str += char
 
             try:
@@ -86,22 +97,5 @@ class Scanner:
                 )
                 return self.get_next_token()
 
-    def handle_panic_mode(self, msg):
-        """
-        Unused method!
-        TODO: Fix the panic mode behavior and decide about deleting
-        this method.
-        """
-        self.dfa.reset()
-        while True:
-            char = self.buffer.get()
-            if not char:
-                break
-            if self.dfa.can_scan(char):
-                self.buffer.unread(char)
-                break
-            self.pending_str.append(char)
-
     def get_pending_str(self):
         return ''.join(self.pending_str)
-

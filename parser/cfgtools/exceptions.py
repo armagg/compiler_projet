@@ -1,0 +1,2 @@
+class ReachedEOFException(Exception):
+    pass

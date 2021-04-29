@@ -1,5 +1,6 @@
-from .token_type import TokenType
 import config
+from .token_type import TokenType
+
 
 class BaseStorage:
     def dump(self, file_name):
@@ -84,4 +85,3 @@ class SymbolTableStorage(BaseStorage):
         with open(file_name, 'w') as f:
             for idx, symbol in enumerate(self.symbols):
                 f.write(f'{idx + 1}.\t{symbol}\n')
-

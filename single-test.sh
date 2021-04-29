@@ -23,26 +23,18 @@ cp "$test_dir/input.txt" input.txt
 
 python compiler.py
 
-diff -Bbq lexical_errors.txt "$test_dir/lexical_errors.txt" 2>&1 > /dev/null
+diff -Bbqi syntax_errors.txt "$test_dir/syntax_errors.txt" 2>&1 > /dev/null
 if [ $? -ne 0 ]
 then
-    fail "lexical_errors"
+    fail "syntax_errors"
 else
-    success "lexical_errors"
+    success "syntax_errors"
 fi
 
-diff -Bbq symbol_table.txt "$test_dir/symbol_table.txt" 2>&1 > /dev/null
+diff -Bbqi parse_tree.txt "$test_dir/parse_tree.txt" 2>&1 > /dev/null
 if [ $? -ne 0 ]
 then
-    fail "symbol_table"
+    fail "parse_tree"
 else
-    success "symbol_table"
-fi
-
-diff -Bbq tokens.txt "$test_dir/tokens.txt" 2>&1 > /dev/null
-if [ $? -ne 0 ]
-then
-    fail "tokens"
-else
-    success "tokens"
+    success "parse_tree"
 fi

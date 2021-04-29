@@ -1,0 +1,91 @@
+Program Declaration-list _EOF_$
+Declaration-list Declaration Declaration-list
+Declaration-list
+Declaration Declaration-initial Declaration-prime
+Declaration-initial Type-specifier _ID
+Declaration-prime Fun-declaration-prime
+Declaration-prime Var-declaration-prime
+Var-declaration-prime _SYMBOL_;
+Var-declaration-prime _SYMBOL_[ _NUM _SYMBOL_] _SYMBOL_;
+Fun-declaration-prime _SYMBOL_( Params _SYMBOL_) Compound-stmt
+Type-specifier _KEYWORD_int
+Type-specifier _KEYWORD_void
+Params _KEYWORD_int _ID Param-prime Param-list
+Params _KEYWORD_void Param-list-void-abtar
+Param-list-void-abtar _ID Param-prime Param-list
+Param-list-void-abtar
+Param-list _SYMBOL_, Param Param-list
+Param-list
+Param Declaration-initial Param-prime
+Param-prime _SYMBOL_[ _SYMBOL_]
+Param-prime
+Compound-stmt _SYMBOL_{ Declaration-list Statement-list _SYMBOL_}
+Statement-list Statement Statement-list
+Statement-list
+Statement Expression-stmt
+Statement Compound-stmt
+Statement Selection-stmt
+Statement Iteration-stmt
+Statement Return-stmt
+Statement For-stmt
+Expression-stmt Expression _SYMBOL_;
+Expression-stmt _KEYWORD_break _SYMBOL_;
+Expression-stmt _SYMBOL_;
+Selection-stmt _KEYWORD_if _SYMBOL_( Expression _SYMBOL_) Statement _KEYWORD_else Statement
+Iteration-stmt _KEYWORD_while _SYMBOL_( Expression _SYMBOL_) Statement
+Return-stmt _KEYWORD_return Return-stmt-prime
+Return-stmt-prime _SYMBOL_;
+Return-stmt-prime Expression _SYMBOL_;
+For-stmt _KEYWORD_for _ID _SYMBOL_= Vars Statement
+Vars Var Var-zegond
+Var-zegond _SYMBOL_, Var Var-zegond
+Var-zegond
+Var _ID Var-prime
+Expression Simple-expression-zegond
+Expression _ID B
+B _SYMBOL_= Expression
+B _SYMBOL_[ Expression _SYMBOL_] H
+B Simple-expression-prime
+H _SYMBOL_= Expression
+H G D C
+Simple-expression-zegond Additive-expression-zegond C
+Simple-expression-prime Additive-expression-prime C
+C Relop Additive-expression
+C
+Relop _SYMBOL_<
+Relop _SYMBOL_==
+Additive-expression Term D
+Additive-expression-prime Term-prime D
+Additive-expression-zegond Term-zegond D
+D Addop Term D
+D
+Addop _SYMBOL_+
+Addop _SYMBOL_-
+Term Signed-factor G
+Term-prime Signed-factor-prime G
+Term-zegond Signed-factor-zegond G
+G _SYMBOL_* Signed-factor G
+G
+Signed-factor _SYMBOL_+ Factor
+Signed-factor _SYMBOL_- Factor
+Signed-factor Factor
+Signed-factor-prime Factor-prime
+Signed-factor-zegond _SYMBOL_+ Factor
+Signed-factor-zegond _SYMBOL_- Factor
+Signed-factor-zegond Factor-zegond
+Factor _SYMBOL_( Expression _SYMBOL_)
+Factor _ID Var-call-prime
+Factor _NUM
+Var-call-prime _SYMBOL_( Args _SYMBOL_)
+Var-call-prime Var-prime
+Var-prime _SYMBOL_[ Expression _SYMBOL_]
+Var-prime
+Factor-prime _SYMBOL_( Args _SYMBOL_)
+Factor-prime
+Factor-zegond _SYMBOL_( Expression _SYMBOL_)
+Factor-zegond _NUM
+Args Arg-list
+Args
+Arg-list Expression Arg-list-prime
+Arg-list-prime _SYMBOL_, Expression Arg-list-prime
+Arg-list-prime
