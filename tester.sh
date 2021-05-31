@@ -3,6 +3,7 @@
 function clean_files {
     rm -f input.txt lexical_errors.txt symbol_table.txt tokens.txt
     rm -f parse_tree.txt syntax_errors.txt
+    rm -f output.txt stdout.txt
 }
 
 if [ $# -ne 1 ]

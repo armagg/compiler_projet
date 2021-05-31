@@ -41,7 +41,7 @@ class Terminal(GrammarElement):
         else:
             return token == (self.name, self.value)
 
-    def match(self, tokens, errors):
+    def match(self, tokens, errors, ss, pb, symbol_table):
         lookahead = tokens.lookahead
         if lookahead is None:
             return None

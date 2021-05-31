@@ -18,6 +18,8 @@ GRAMMAR_FILE = os.path.join(LSD_DIR, 'grammar.txt')
 TREE_FILE = os.path.join(BASE_DIR, 'parse_tree.txt')
 PARSER_ERRORS_FILE = os.path.join(BASE_DIR, 'syntax_errors.txt')
 
+INTERMEDIATE_CODE_FILE = 'output.txt'
+
 DEFAULT_TOKEN_STORAGE_CONFIG = {
     "care_about": [
         TokenType.ID,

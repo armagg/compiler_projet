@@ -1,6 +1,6 @@
 from parser.cfgtools.terminal import Terminal
-from parser.cfgtools.action_symbol import ActionSymbol
 from parser.cfgtools.grammar_element import GrammarElement
+from codegen.action_symbol import ActionSymbol
 
 
 class Production:

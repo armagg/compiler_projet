@@ -80,7 +80,7 @@ class NonTerminal(GrammarElement):
             if terminal not in self.parse_table:
                 self.parse_table[terminal] = -1
 
-    def match(self, tokens, errors):
+    def match(self, tokens, errors, ss, pb, symbol_table):
         while True:
             lookahead = tokens.lookahead
             if lookahead is None:
@@ -95,14 +95,26 @@ class NonTerminal(GrammarElement):
                         )
                         return None
                     else:
-                        cur_prod = self.productions[prod_idx].hard_elements
+                        cur_prod = self.productions[prod_idx].rhs
                         if cur_prod:
                             for elem in cur_prod:
-                                child_node = elem.match(tokens, errors)
+                                child_node = elem.match(
+                                    tokens,
+                                    errors,
+                                    ss,
+                                    pb,
+                                    symbol_table,
+                                )
                                 if child_node:
                                     child_node.parent = node
                         else:
-                            child_node = Terminal.Epsilon.match(tokens, errors)
+                            child_node = Terminal.Epsilon.match(
+                                tokens,
+                                errors,
+                                ss,
+                                pb,
+                                symbol_table,
+                            )
                             child_node.parent = node
                         return node
             if lookahead[0] == TokenType.EOF:

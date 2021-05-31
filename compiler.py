@@ -28,6 +28,7 @@ def main():
         grammar_file=config.GRAMMAR_FILE,
         tree_file=config.TREE_FILE,
         errors_file=config.PARSER_ERRORS_FILE,
+        code_file=config.INTERMEDIATE_CODE_FILE,
     )
 
     parser.run()

@@ -22,19 +22,12 @@ test_dir="$1"
 cp "$test_dir/input.txt" input.txt
 
 python compiler.py
+./runner.exe 2> /dev/null > stdout.txt
 
-diff -Bbqi syntax_errors.txt "$test_dir/syntax_errors.txt" 2>&1 > /dev/null
+diff -Bbqi stdout.txt "$test_dir/expected.txt" 2>&1 > /dev/null
 if [ $? -ne 0 ]
 then
-    fail "syntax_errors"
+    fail "stdout"
 else
-    success "syntax_errors"
-fi
-
-diff -Bbqi parse_tree.txt "$test_dir/parse_tree.txt" 2>&1 > /dev/null
-if [ $? -ne 0 ]
-then
-    fail "parse_tree"
-else
-    success "parse_tree"
+    success "stdout"
 fi

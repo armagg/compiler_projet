@@ -48,7 +48,7 @@ Expression-stmt Expression #popexp _SYMBOL_;
 Expression-stmt _KEYWORD_break _SYMBOL_;
 Expression-stmt _SYMBOL_;
 
-Selection-stmt _KEYWORD_if _SYMBOL_( Expression _SYMBOL_) #startif Statement _KEYWORD_else #startelse Statement
+Selection-stmt _KEYWORD_if _SYMBOL_( Expression _SYMBOL_) #startif Statement _KEYWORD_else #startelse Statement #endelse
 
 Iteration-stmt _KEYWORD_while #startwhile _SYMBOL_( Expression _SYMBOL_) #midwhile Statement #endwhile
 
@@ -67,13 +67,13 @@ Var-zegond
 Var _ID Var-prime
 
 Expression Simple-expression-zegond
-Expression _ID B
+Expression #pushid _ID B
 
 B _SYMBOL_= Expression #assignvar
-B _SYMBOL_[ Expression _SYMBOL_] H
+B _SYMBOL_[ Expression _SYMBOL_] #arrindex H
 B Simple-expression-prime
 
-H _SYMBOL_= Expression #assignarr
+H _SYMBOL_= Expression #assignvar
 H G D C
 
 Simple-expression-zegond Additive-expression-zegond C
@@ -121,7 +121,7 @@ Factor #pushnum _NUM
 Var-call-prime _SYMBOL_( Args _SYMBOL_)
 Var-call-prime Var-prime
 
-Var-prime _SYMBOL_[ Expression _SYMBOL_]
+Var-prime _SYMBOL_[ Expression _SYMBOL_] #arrindex
 Var-prime
 
 Factor-prime _SYMBOL_( Args #print _SYMBOL_)
