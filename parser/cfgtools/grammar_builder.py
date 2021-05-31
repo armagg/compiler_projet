@@ -1,5 +1,5 @@
 from parser.cfgtools.grammar import Grammar
-from parser.cfgtools.terminal import Terminal
+from parser.cfgtools.production import Production
 
 
 class GrammarBuilder:
@@ -7,14 +7,8 @@ class GrammarBuilder:
         self.grammar = Grammar()
 
     def add_production(self, prod_str):
-        prod = []
-        for elem_str in prod_str:
-            if elem_str.startswith('_'):
-                elem = Terminal.get_instance(elem_str)
-            else:
-                elem = self.grammar.get_or_create_nonterminal(elem_str)
-            prod.append(elem)
-        self.grammar.add_production(prod[0], prod[1:])
+        prod = Production(prod_str, self.grammar)
+        self.grammar.add_production(prod)
 
     def set_start(self, start):
         start = self.grammar.get_or_create_nonterminal(start)

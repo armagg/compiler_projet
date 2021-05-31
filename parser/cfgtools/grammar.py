@@ -23,8 +23,8 @@ class Grammar:
         return new_nt
 
     @staticmethod
-    def add_production(lhs, rhs):
-        lhs.add_production(rhs)
+    def add_production(prod):
+        prod.lhs.add_production(prod)
 
     def calculate_parse_table(self):
         self.calculate_follow_sets()

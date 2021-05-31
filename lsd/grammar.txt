@@ -10,7 +10,7 @@ Declaration-initial Type-specifier #declvar _ID
 Declaration-prime #skipvar Fun-declaration-prime
 Declaration-prime Var-declaration-prime
 
-Var-declaration-prime _SYMBOL_ #savevar;
+Var-declaration-prime #savevar _SYMBOL_;
 Var-declaration-prime _SYMBOL_[ #savearr _NUM _SYMBOL_] _SYMBOL_;
 
 Fun-declaration-prime _SYMBOL_( Params _SYMBOL_) Compound-stmt

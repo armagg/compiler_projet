@@ -17,8 +17,8 @@ class NonTerminal(GrammarElement):
     def is_terminal(self):
         return False
 
-    def add_production(self, rhs):
-        self.productions.append(rhs)
+    def add_production(self, prod):
+        self.productions.append(prod)
 
     def can_empty(self):
         return Terminal.Epsilon in self.first
@@ -26,6 +26,7 @@ class NonTerminal(GrammarElement):
     def update_first_set(self):
         initial_size = len(self.first)
         for prod in self.productions:
+            prod = prod.hard_elements
             empty_count = 0
             for elem in prod:
                 self.first = self.first.union(elem.first - {Terminal.Epsilon})
@@ -39,6 +40,7 @@ class NonTerminal(GrammarElement):
     def update_follow_set(self):
         updated = False
         for prod in self.productions:
+            prod = prod.hard_elements
             for idx, cur in enumerate(prod):
                 if not isinstance(cur, NonTerminal):
                     continue
@@ -46,7 +48,9 @@ class NonTerminal(GrammarElement):
                 initial_size = len(cur.follow)
                 empty_count = 0
                 for nxt in prod[idx + 1:]:
-                    cur.follow = cur.follow.union(nxt.first - {Terminal.Epsilon})
+                    cur.follow = cur.follow.union(
+                        nxt.first - {Terminal.Epsilon}
+                    )
                     if not nxt.can_empty():
                         break
                     empty_count += 1
@@ -60,6 +64,7 @@ class NonTerminal(GrammarElement):
 
     def build_parse_table(self):
         for idx, prod in enumerate(self.productions):
+            prod = prod.hard_elements
             empty_count = 0
             for elem in prod:
                 for terminal in elem.first:
@@ -90,8 +95,9 @@ class NonTerminal(GrammarElement):
                         )
                         return None
                     else:
-                        if self.productions[prod_idx]:
-                            for elem in self.productions[prod_idx]:
+                        cur_prod = self.productions[prod_idx].hard_elements
+                        if cur_prod:
+                            for elem in cur_prod:
                                 child_node = elem.match(tokens, errors)
                                 if child_node:
                                     child_node.parent = node
