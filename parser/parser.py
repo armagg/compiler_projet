@@ -33,8 +33,8 @@ class Parser:
         )
 
     def dump_data(self):
-        self.error_storage.dump_data(self.errors_file)
-        self.render_parse_tree()
+        # self.error_storage.dump_data(self.errors_file)
+        # self.render_parse_tree()
         self.generate_code()
 
     def render_parse_tree(self):
