@@ -26,7 +26,7 @@ class GrammarBuilder:
         instance = GrammarBuilder()
         with open(file_address, 'r') as f:
             lines = f.readlines()
-        productions_str = [line.split() for line in lines]
+        productions_str = [line.split() for line in lines if line.strip()]
         for prod_str in productions_str:
             instance.add_production(prod_str)
         return instance.set_start(productions_str[0][0])
